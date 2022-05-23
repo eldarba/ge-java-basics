@@ -1,14 +1,15 @@
 package i;
 
-import a.Claculator;
+//import a.Claculator;
 
 public class TestCalculator {
 	
 	public static void main(String[] args) {
+		System.out.println("Hi");
 		
-		Claculator calc = new Claculator();
+//		Claculator calc = new Claculator();
 		
-		System.out.println(calc.add(5, 9));
+//		System.out.println(calc.add(5, 9));
 	}
 
 }
