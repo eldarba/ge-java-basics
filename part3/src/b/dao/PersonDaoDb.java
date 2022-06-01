@@ -3,7 +3,9 @@ package b.dao;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 
 public class PersonDaoDb implements PersonDao {
 
@@ -36,8 +38,30 @@ public class PersonDaoDb implements PersonDao {
 
 	@Override
 	public Person read(int id) {
-		// TODO Auto-generated method stub
-		return null;
+		Connection con = null;
+		try {
+			con = ConnectionPool.getInstance().getConnection();
+			String sql = "select from person where id = ?";
+			try (PreparedStatement pstmt = con.prepareStatement(sql);) {
+				pstmt.setInt(1, id);
+				ResultSet rs = pstmt.executeQuery();
+				if (rs.next()) {
+					int personId = rs.getInt("id");
+					String name = rs.getNString("name");
+					LocalDate birthdate = rs.getDate("birthdate").toLocalDate();
+					Person person = new Person(personId, name, birthdate);
+					return person;
+				} else {
+					throw new RuntimeException("read person faild. id " + id + " not found");
+				}
+			} catch (SQLException e) {
+				throw new RuntimeException("read person faild", e);
+			}
+		} finally {
+			if (con != null) {
+				ConnectionPool.getInstance().returnConnection(con);
+			}
+		}
 	}
 
 	@Override
