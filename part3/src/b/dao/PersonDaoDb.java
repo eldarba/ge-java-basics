@@ -6,6 +6,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 public class PersonDaoDb implements PersonDao {
 
@@ -65,6 +67,33 @@ public class PersonDaoDb implements PersonDao {
 	}
 
 	@Override
+	public List<Person> readAll() {
+		Connection con = null;
+		try {
+			con = ConnectionPool.getInstance().getConnection();
+			String sql = "select * from person";
+			try (PreparedStatement pstmt = con.prepareStatement(sql);) {
+				ResultSet rs = pstmt.executeQuery();
+				List<Person> list = new ArrayList<>();
+				while (rs.next()) {
+					int personId = rs.getInt("id");
+					String name = rs.getNString("name");
+					LocalDate birthdate = rs.getDate("birthdate").toLocalDate();
+					Person person = new Person(personId, name, birthdate);
+					list.add(person);
+				}
+				return list;
+			} catch (SQLException e) {
+				throw new RuntimeException("read all faild", e);
+			}
+		} finally {
+			if (con != null) {
+				ConnectionPool.getInstance().returnConnection(con);
+			}
+		}
+	}
+
+	@Override
 	public void update(Person person) {
 		Connection con = null;
 		try {
@@ -76,7 +105,7 @@ public class PersonDaoDb implements PersonDao {
 				pstmt.setInt(3, person.getId());
 				int rowCount = pstmt.executeUpdate();
 				if (rowCount == 0) {
-					throw new RuntimeException("delete person faild. id " + person.getId() + " not found");
+					throw new RuntimeException("update person faild. id " + person.getId() + " not found");
 				}
 			} catch (SQLException e) {
 				throw new RuntimeException("update person faild", e);

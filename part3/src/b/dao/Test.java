@@ -11,13 +11,28 @@ public class Test {
 			PersonDao dao = new PersonDaoDb();
 
 //			{// add
-//				dao.add(new Person(301, "Gearge", LocalDate.of(2000, 1, 15)));
+//				dao.add(new Person(303, "Lea", LocalDate.of(1970, 1, 15)));
 //				System.out.println("person added");
 //			}
 
-			{// read
-				Person p = dao.read(301);
-				System.out.println(p);
+//			{// read
+//				Person p = dao.read(301);
+//				System.out.println(p);
+//			}
+
+//			{// read all
+//				List<Person> list = dao.readAll();
+//				System.out.println(list);
+//			}
+
+//			{ // update
+//				dao.update(new Person(301, "aaa", LocalDate.of(2005, 1, 15)));
+//				System.out.println("updated");
+//			}
+
+			{// delete
+				dao.delete(301);
+				System.out.println("deleted");
 			}
 
 		} catch (Exception e) {
