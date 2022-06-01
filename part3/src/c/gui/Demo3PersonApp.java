@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 import b.dao.Person;
@@ -56,11 +57,16 @@ public class Demo3PersonApp {
 
 		// add action listener to the add button
 		btAdd.addActionListener((e) -> {
-			int id = Integer.parseInt(tfId.getText());
-			String name = tfName.getText();
-			LocalDate birthdate = LocalDate.parse(tfBirthdate.getText());
-			Person person = new Person(id, name, birthdate);
-			this.personDao.add(person);
+			try {
+				int id = Integer.parseInt(tfId.getText());
+				String name = tfName.getText();
+				LocalDate birthdate = LocalDate.parse(tfBirthdate.getText());
+				Person person = new Person(id, name, birthdate);
+				this.personDao.add(person);
+				JOptionPane.showMessageDialog(fr, "person added");
+			} catch (Exception e2) {
+				JOptionPane.showMessageDialog(fr, "Input Error: " + e2.getMessage());
+			}
 		});
 
 		fr.setVisible(true);
