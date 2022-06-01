@@ -3,17 +3,17 @@ package b.dao;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 public class ConnectionPool {
 
 	private static ConnectionPool instance;
-	private List<Connection> connections = new ArrayList<>();
+	private Set<Connection> connections = new HashSet<>();
 	public static final int MAX = 10;
 	private String url = "jdbc:mysql://localhost:3306/db1";
 	private String user = "root";
-	private String password = "1234";
+	private String password = "12345";
 
 	private ConnectionPool() throws SQLException {
 		for (int i = 0; i < MAX; i++) {
@@ -30,6 +30,17 @@ public class ConnectionPool {
 			}
 		}
 		return instance;
+	}
+
+	public synchronized Connection getConnection() {
+		while (this.connections.isEmpty()) {
+			try {
+				wait();
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+
 	}
 
 }
