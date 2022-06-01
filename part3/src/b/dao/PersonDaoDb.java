@@ -74,7 +74,10 @@ public class PersonDaoDb implements PersonDao {
 				pstmt.setString(1, person.getName());
 				pstmt.setDate(2, Date.valueOf(person.getBirthdate()));
 				pstmt.setInt(3, person.getId());
-				pstmt.executeUpdate();
+				int rowCount = pstmt.executeUpdate();
+				if (rowCount == 0) {
+					throw new RuntimeException("delete person faild. id " + person.getId() + " not found");
+				}
 			} catch (SQLException e) {
 				throw new RuntimeException("update person faild", e);
 			}
@@ -94,7 +97,10 @@ public class PersonDaoDb implements PersonDao {
 			String sql = "delete from person where id = ?";
 			try (PreparedStatement pstmt = con.prepareStatement(sql);) {
 				pstmt.setInt(1, id);
-				pstmt.executeUpdate();
+				int rowCount = pstmt.executeUpdate();
+				if (rowCount == 0) {
+					throw new RuntimeException("delete person faild. id " + id + " not found");
+				}
 			} catch (SQLException e) {
 				throw new RuntimeException("delete person faild", e);
 			}
