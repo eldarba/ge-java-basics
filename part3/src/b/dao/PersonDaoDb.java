@@ -26,7 +26,7 @@ public class PersonDaoDb implements PersonDao {
 				throw new RuntimeException("add person faild", e);
 			}
 
-		} finally {
+		} finally { // return the connection to the pool
 			if (con != null) {
 				ConnectionPool.getInstance().returnConnection(con);
 			}

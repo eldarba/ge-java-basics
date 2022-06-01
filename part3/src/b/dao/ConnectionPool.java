@@ -14,7 +14,7 @@ public class ConnectionPool {
 	public static final int MAX = 10;
 	private String url = "jdbc:mysql://localhost:3306/db1";
 	private String user = "root";
-	private String password = "12345";
+	private String password = "1234";
 	private boolean open;
 
 	private ConnectionPool() throws SQLException {
