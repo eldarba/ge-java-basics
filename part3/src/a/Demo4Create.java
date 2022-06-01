@@ -5,7 +5,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class Demo3Statement {
+public class Demo4Create {
 
 	public static void main(String[] args) {
 
@@ -14,7 +14,7 @@ public class Demo3Statement {
 		String user = "root";
 		String password = "1234";
 
-		String sql = "create table person(id int primary key, name varchar(25), birthdate date)";
+		String sql = "insert into person values(102, 'Dani', '1980-05-23')";
 		// connect
 		try (Connection con = DriverManager.getConnection(url, user, password);) {
 			System.out.println("connected");
