@@ -41,7 +41,7 @@ public class PersonDaoDb implements PersonDao {
 		Connection con = null;
 		try {
 			con = ConnectionPool.getInstance().getConnection();
-			String sql = "select from person where id = ?";
+			String sql = "select * from person where id = ?";
 			try (PreparedStatement pstmt = con.prepareStatement(sql);) {
 				pstmt.setInt(1, id);
 				ResultSet rs = pstmt.executeQuery();
@@ -66,13 +66,43 @@ public class PersonDaoDb implements PersonDao {
 
 	@Override
 	public void update(Person person) {
-		// TODO Auto-generated method stub
+		Connection con = null;
+		try {
+			con = ConnectionPool.getInstance().getConnection();
+			String sql = "update person set name=?, birthdate=? where id = ?";
+			try (PreparedStatement pstmt = con.prepareStatement(sql);) {
+				pstmt.setString(1, person.getName());
+				pstmt.setDate(2, Date.valueOf(person.getBirthdate()));
+				pstmt.setInt(3, person.getId());
+				pstmt.executeUpdate();
+			} catch (SQLException e) {
+				throw new RuntimeException("update person faild", e);
+			}
+		} finally {
+			if (con != null) {
+				ConnectionPool.getInstance().returnConnection(con);
+			}
+		}
 
 	}
 
 	@Override
 	public void delete(int id) {
-		// TODO Auto-generated method stub
+		Connection con = null;
+		try {
+			con = ConnectionPool.getInstance().getConnection();
+			String sql = "delete from person where id = ?";
+			try (PreparedStatement pstmt = con.prepareStatement(sql);) {
+				pstmt.setInt(1, id);
+				pstmt.executeUpdate();
+			} catch (SQLException e) {
+				throw new RuntimeException("delete person faild", e);
+			}
+		} finally {
+			if (con != null) {
+				ConnectionPool.getInstance().returnConnection(con);
+			}
+		}
 
 	}
 
