@@ -25,7 +25,7 @@ public class MainApp {
 
 			System.out.println("==== random:");
 			for (int i = 0; i < 5; i++) {
-				int r = ctx.getBean(Integer.class);
+				int r = ctx.getBean("random2", Integer.class);
 				System.out.println(r);
 			}
 		}
