@@ -22,20 +22,33 @@ public class App {
 
 			Coach runCoach = ctx.getBean("runningCoach", Coach.class);
 			Coach tennisCoach = ctx.getBean("tennisCoach", Coach.class);
+			Coach swimCoach = ctx.getBean("swimCoach", Coach.class);
 			System.out.println("============");
+			System.out.println(runCoach.getSportField());
 			System.out.println(runCoach.getLicense());
 			System.out.println(runCoach.getTrainingPlan());
 			System.out.println("============");
+			System.out.println(tennisCoach.getSportField());
 			System.out.println(tennisCoach.getLicense());
 			System.out.println(tennisCoach.getTrainingPlan());
 			System.out.println("============");
+			System.out.println(swimCoach.getSportField());
+			System.out.println(swimCoach.getLicense());
+			System.out.println(swimCoach.getTrainingPlan());
 
 		}
 	}
 
 	@Bean
-	@Scope("prototype")
+	// @Scope("prototype")
 	public Coach tennisCoach(@Value("${coach.plan.tenis}") String plan) {
+		SportCoach coach = new SportCoach(plan);
+		return coach;
+	}
+
+	@Bean
+	@Scope("prototype")
+	public Coach swimCoach(@Value("${coach.plan.swim}") String plan) {
 		SportCoach coach = new SportCoach(plan);
 		return coach;
 	}
