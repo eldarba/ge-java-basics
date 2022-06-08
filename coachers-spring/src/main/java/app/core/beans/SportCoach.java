@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-@Component("running_coach")
+@Component("runningCoach")
 @Scope("prototype")
 public class SportCoach extends Coach {
 
