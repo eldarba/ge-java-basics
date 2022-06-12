@@ -1,6 +1,5 @@
 package app.core.entities;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,7 +11,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -24,29 +22,24 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
-@ToString(exclude = { "school", "teachers" })
+@ToString(exclude = "students")
 @Entity
-public class Student {
+public class Teacher {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	private String name;
-	private LocalDate birtdate;
-
-	@ManyToOne
-	@JoinColumn(name = "school_id")
-	private School school;
 
 	@ManyToMany(cascade = { CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH })
-	@JoinTable(name = "students_teachers", joinColumns = @JoinColumn(name = "student_id"), inverseJoinColumns = @JoinColumn(name = "teacher_id"))
-	private List<Teacher> teachers;
+	@JoinTable(name = "students_teachers", joinColumns = @JoinColumn(name = "teacher_id"), inverseJoinColumns = @JoinColumn(name = "student_id"))
+	private List<Student> students;
 
-	public void addTeacher(Teacher teacher) {
-		if (this.teachers == null) {
-			this.teachers = new ArrayList<>();
+	public void addStudent(Student student) {
+		if (this.students == null) {
+			this.students = new ArrayList<>();
 		}
-		this.teachers.add(teacher);
+		this.students.add(student);
 	}
 
 }
