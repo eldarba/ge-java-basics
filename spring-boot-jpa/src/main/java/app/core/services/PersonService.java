@@ -53,10 +53,17 @@ public class PersonService {
 		if (repo.existsById(person.getId())) {
 			repo.save(person);
 		} else {
-			throw new RuntimeException("updtae person failed. id " + person.getId() + " bot found");
+			throw new RuntimeException("updtae person failed. id " + person.getId() + " not found");
 		}
 	}
 
 	// DELETE
+	public void delete(int personId) {
+		if (repo.existsById(personId)) {
+			repo.deleteById(personId);
+		} else {
+			throw new RuntimeException("delete person failed. id " + personId + " not found");
+		}
+	}
 
 }

@@ -1,12 +1,9 @@
 package app.core.apps;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
-import app.core.entities.Person;
 import app.core.services.PersonService;
 
 @Component
@@ -23,18 +20,31 @@ public class App2 implements CommandLineRunner {
 			// service.create(new Person(3, "Lior", 26));
 
 			// READ
-//			System.out.println(service.find(2));
+//			{
+//				System.out.println(service.find(2));
+//			}
 
 			// READ ALL
-			System.out.println("===============");
+//			{
+//				System.out.println("===============");
+//
+//				List<Person> persons = service.findAll();
+//				for (Person person : persons) {
+//					System.out.println(person);
+//				}
+//				// shorter version functional programming
+//				// service.findAll().forEach(System.out::println);
+//				System.out.println("===============");
+//			}
 
-			List<Person> persons = service.findAll();
-			for (Person person : persons) {
-				System.out.println(person);
+//			{ // update
+//				Person person = new Person(2, "Meir", 25);
+//				service.updtae(person);
+//			}
+
+			{ // delete
+				service.delete(2);
 			}
-			// shorter version functional programming
-			// service.findAll().forEach(System.out::println);
-			System.out.println("===============");
 
 		} catch (Exception e) {
 			System.out.println("===== ERROR =====");
