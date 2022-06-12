@@ -1,11 +1,15 @@
 package app.core.entities;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 import lombok.AllArgsConstructor;
@@ -18,7 +22,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
-@ToString(exclude = "address")
+@ToString(exclude = { "address", "students" })
 @Entity
 public class School {
 
@@ -30,5 +34,16 @@ public class School {
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "address_id")
 	private Address address;
+
+	@OneToMany(mappedBy = "school", cascade = CascadeType.ALL)
+	private List<Student> students;
+
+	public void addStudent(Student student) {
+		if (this.students == null) {
+			this.students = new ArrayList<>();
+		}
+		student.setSchool(this);
+		this.students.add(student);
+	}
 
 }
