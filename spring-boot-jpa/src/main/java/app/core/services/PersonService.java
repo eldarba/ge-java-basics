@@ -1,5 +1,6 @@
-package app.core.dao;
+package app.core.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import javax.transaction.Transactional;
@@ -7,6 +8,7 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import app.core.dao.PersonRepository;
 import app.core.entities.Person;
 
 @Service
@@ -14,12 +16,12 @@ import app.core.entities.Person;
 public class PersonService {
 
 	@Autowired
-	private PersonDaoUltimate dao;
+	private PersonRepository repo;
 
 	// CREATE
 	public int create(Person person) {
-		if (!dao.existsById(person.getId())) {
-			Person p = dao.save(person);
+		if (!repo.existsById(person.getId())) {
+			Person p = repo.save(person);
 			return p.getId();
 		} else {
 			throw new RuntimeException("create person failed. id " + person.getId() + " already exists");
@@ -28,7 +30,7 @@ public class PersonService {
 
 	// READ
 	public Person find(int personId) {
-		Optional<Person> opt = dao.findById(personId);
+		Optional<Person> opt = repo.findById(personId);
 		if (opt.isPresent()) {
 			return opt.get();
 		} else {
@@ -37,11 +39,24 @@ public class PersonService {
 
 		// in functional programming syntax:
 
-//		return dao.findById(personId)
+//		return repo.findById(personId)
 //				.orElseThrow(() -> new RuntimeException("person with id" + personId + " not found"));
 	}
+
 	// READ ALL
-	// UPDAT
+	public List<Person> findAll() {
+		return repo.findAll();
+	}
+
+	// UPDATE
+	public void updtae(Person person) {
+		if (repo.existsById(person.getId())) {
+			repo.save(person);
+		} else {
+			throw new RuntimeException("updtae person failed. id " + person.getId() + " bot found");
+		}
+	}
+
 	// DELETE
 
 }
