@@ -1,6 +1,7 @@
 package app.core.dao;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -8,12 +9,13 @@ import org.springframework.stereotype.Repository;
 import app.core.entities.Person;
 
 @Repository
-public class PersonDao {
+public class PersonDaoManual {
 
 	@Autowired
-	private EntityManager em;
+	private EntityManagerFactory factory;
 
 	public int create(Person person) {
+		EntityManager em = factory.createEntityManager();
 		try {
 			em.getTransaction().begin();
 			em.persist(person);
