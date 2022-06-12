@@ -38,4 +38,8 @@ public class PersonDao {
 		PersonPersistent.setAge(person.getAge());
 	}
 
+	public void delete(int personId) {
+		em.remove(this.getPerson(personId));
+	}
+
 }

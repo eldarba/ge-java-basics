@@ -5,7 +5,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 
 import app.core.dao.PersonDao;
-import app.core.entities.Person;
 
 @SpringBootApplication
 public class App {
@@ -28,10 +27,14 @@ public class App {
 //				System.out.println(person);
 //			}
 
-			{ // update
-				Person person = new Person(2, "Moshe", 50);
-				dao.update(person);
-				System.out.println("updated");
+//			{ // update
+//				Person person = new Person(2, "Moshe", 50);
+//				dao.update(person);
+//				System.out.println("updated");
+//			}
+
+			{// delete
+				dao.delete(1);
 			}
 
 		} catch (Exception e) {
