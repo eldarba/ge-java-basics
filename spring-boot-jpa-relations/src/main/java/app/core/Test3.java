@@ -2,13 +2,12 @@ package app.core;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.stereotype.Component;
 
 import app.core.entities.Student;
 import app.core.entities.Teacher;
 import app.core.services.SchoolService;
 
-@Component
+//@Component
 public class Test3 implements CommandLineRunner {
 
 	@Autowired
