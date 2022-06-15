@@ -1,5 +1,7 @@
 package app.core.services;
 
+import java.util.List;
+
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +25,19 @@ public class ProductService {
 		} else {
 			throw new ProductSystemException("addProduct failed - price cannot be negative");
 		}
+	}
+
+	public Product getProduct(int productId) {
+		var opt = this.productRepo.findById(productId);
+		if (opt.isPresent()) {
+			return opt.get();
+		} else {
+			throw new ProductSystemException("getProduct failed - not found");
+		}
+	}
+
+	public List<Product> getAllProducts() {
+		return this.productRepo.findAll();
 	}
 
 }
