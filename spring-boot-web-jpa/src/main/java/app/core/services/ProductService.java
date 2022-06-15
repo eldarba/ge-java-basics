@@ -40,4 +40,20 @@ public class ProductService {
 		return this.productRepo.findAll();
 	}
 
+	public void updateProduct(Product product) {
+		if (this.productRepo.existsById(product.getId())) {
+			this.productRepo.save(product);
+		} else {
+			throw new ProductSystemException("updateProduct failed - not found");
+		}
+	}
+
+	public void deleteProduct(int productId) {
+		if (this.productRepo.existsById(productId)) {
+			this.productRepo.deleteById(productId);
+		} else {
+			throw new ProductSystemException("deleteProduct failed - not found");
+		}
+	}
+
 }
