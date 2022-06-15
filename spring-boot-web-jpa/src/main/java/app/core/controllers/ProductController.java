@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,13 +23,24 @@ public class ProductController {
 	@Autowired
 	private ProductService productService;
 
-	@PostMapping
+	@PostMapping("/add")
 	public int addProduct(@RequestBody Product product) {
 		return this.productService.addProduct(product);
 	}
 
-	@GetMapping
-	public Product getProduct(@RequestParam int productId) {
+	// http://localhost:8080/find?productId=1
+	@GetMapping("/find")
+	public Product getProduct1(@RequestParam int productId) {
+		try {
+			return this.productService.getProduct(productId);
+		} catch (Exception e) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+		}
+	}
+
+	// http://localhost:8080/find/1
+	@GetMapping("/find/{productId}")
+	public Product getProduct2(@PathVariable int productId) {
 		try {
 			return this.productService.getProduct(productId);
 		} catch (Exception e) {
@@ -45,7 +57,7 @@ public class ProductController {
 		}
 	}
 
-	@PutMapping
+	@PutMapping("/update")
 	public void updateProduct(@RequestBody Product product) {
 		try {
 			this.productService.updateProduct(product);
@@ -54,7 +66,7 @@ public class ProductController {
 		}
 	}
 
-	@DeleteMapping
+	@DeleteMapping("/delete")
 	public void deleteProduct(@RequestParam int productId) {
 		try {
 			this.productService.deleteProduct(productId);
